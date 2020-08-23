@@ -22,14 +22,7 @@ const ProjectBucket = "project"
 
 func (p *Project) Save() {
 	p.ModifiedAt = time.Now()
-	if err := db.Update(
-		func(tx *nutsdb.Tx) error {
-			key := []byte(p.ID)
-			if err := tx.Put(ProjectBucket, key, p.toJSON(), 0); err != nil {
-				return err
-			}
-			return nil
-		}); err != nil {
+	if err := db.Update(putKVFunc(ProjectBucket, []byte(p.ID), p.toJSON())); err != nil {
 		log.Fatal(err)
 	}
 }

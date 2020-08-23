@@ -7,8 +7,11 @@ import (
 )
 
 func main() {
-	app := iris.New()
+	startHttpServer()
+}
 
+func startHttpServer() {
+	app := iris.New()
 	app.Get("/", index)
 	app.Get("/projects", GetProjects)
 	app.Post("/projects", AddProject)

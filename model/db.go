@@ -2,7 +2,8 @@ package model
 
 import (
 	"log"
-	"github.com/xujiajun/nutsdb"	
+
+	"github.com/xujiajun/nutsdb"
 )
 
 var db *nutsdb.DB
@@ -14,5 +15,14 @@ func init() {
 	db, err = nutsdb.Open(opt)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func putKVFunc(bucket string, k, v []byte) func(tx *nutsdb.Tx) error {
+	return func(tx *nutsdb.Tx) error {
+		if err := tx.Put(bucket, k, v, 0); err != nil {
+			return err
+		}
+		return nil
 	}
 }
