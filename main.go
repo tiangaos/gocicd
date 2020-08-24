@@ -12,11 +12,17 @@ func main() {
 
 func startHttpServer() {
 	app := iris.New()
-	app.Get("/", index)
+	app.HandleDir("/", "./static/")
+	tmpl := iris.HTML("./static", ".html")
+	tmpl.Reload(true)
+	app.RegisterView(tmpl)
+	app.Get("/", func(ctx iris.Context) {
+		ctx.View("index.html")
+	})
 	app.Get("/projects", GetProjects)
 	app.Post("/projects", AddProject)
 
-	app.Run(iris.Addr(":6600"))
+	app.Run(iris.Addr(":9527"))
 }
 
 func AddProject(ctx iris.Context) {
