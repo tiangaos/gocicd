@@ -1,4 +1,4 @@
-module github.com/tiangaos/gocicd
+module github.com/tiangaos/gops
 
 go 1.14
 
